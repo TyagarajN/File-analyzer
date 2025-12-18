@@ -1,0 +1,9 @@
+[package]
+name = "file_analyzer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+walkdir = "2"
+chrono = "0.4"
+anyhow = "1"
