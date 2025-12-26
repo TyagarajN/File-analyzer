@@ -19,6 +19,7 @@ struct FileMeta {
 
 
 fn scan_directory(root: &PathBuf) -> Result<Vec<FileMeta>> {
+
     let mut files = Vec::new();
 
     for entry in WalkDir::new(root)
@@ -40,7 +41,7 @@ fn scan_directory(root: &PathBuf) -> Result<Vec<FileMeta>> {
             metadata.modified()?.into();
 
         let extension = path
-            .extension()
+            .extension() 
             .and_then(|s| s.to_str())
             .unwrap_or("")
             .to_string();
@@ -59,7 +60,15 @@ fn scan_directory(root: &PathBuf) -> Result<Vec<FileMeta>> {
 
 
 fn main() -> Result<()> {
-    let root = std::env::current_dir()?;
+    let root = std::env::args()
+        .nth(1)
+        .map(PathBuf::from)
+        .unwrap_or(std::env::current_dir()?);
+
+    println!(
+        "Starting file analysis in directory: {:?}",
+        root
+    );
     println!("Scanning directory: {:?}", root);
 
     let files = scan_directory(&root)?;
